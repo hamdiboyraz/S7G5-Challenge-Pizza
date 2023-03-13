@@ -8,8 +8,8 @@ import Success from "../views/Success";
 
 const Layout = () => {
   return (
-    <div className="main-container">
-      <Header />
+    <div className="h-screen w-screen">
+      {/* <Header /> */}
       <div className="body">
         <div className="page-content">
           <Routes>
