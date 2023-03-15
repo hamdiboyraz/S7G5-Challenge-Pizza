@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { postOrder } from "../controllers/orderController";
 
 const Form = ({
   toppingList,
@@ -64,11 +65,12 @@ const Form = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("https://reqres.in/api/orders", orderForm).then((res) => {
-      localStorage.setItem("is-authenticated", "true");
-      sessionStorage.setItem("is-authenticated", "true");
-      console.log("Post Request", res.data);
-    });
+    // axios.post("https://reqres.in/api/orders", orderForm).then((res) => {
+    //   localStorage.setItem("is-authenticated", "true");
+    //   sessionStorage.setItem("is-authenticated", "true");
+    //   console.log("Post Request", res.data);
+    // });
+    postOrder(orderForm);
     navigate("/success/:id");
     console.log(e);
   };
