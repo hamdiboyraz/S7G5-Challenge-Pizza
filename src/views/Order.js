@@ -1,9 +1,59 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import headerImage from "../assets/logo.svg";
 import Form from "../components/Form";
+import { toppings } from "../data/data";
 
 const Order = () => {
+  // console.log(toppings);
+
+  const pizzaPrice = 100;
+  const [counter, setCounter] = useState(1);
+  const [pizzaSizePrice, setPizzaSizePrice] = useState(0);
+  const [toppingsPrice, setToppingsPrice] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [toppingList, setToppingList] = useState(toppings);
+
+  const decrease = () => {
+    setCounter(counter - 1);
+  };
+  const increase = () => {
+    setCounter(counter + 1);
+  };
+
+  const toppingsHandler = (item) => {
+    setToppingList(
+      toppingList.map((el) =>
+        item.name === el.name ? { ...item, isChecked: !item.isChecked } : el
+      )
+    );
+  };
+
+  const calcToppingsPrice = () => {
+    setToppingsPrice(
+      toppingList
+        .filter((el) => el.isChecked === true)
+        .reduce((acc, val) => acc + val.price, 0) * counter
+    );
+  };
+
+  const calcTotalPrice = () => {
+    setTotalPrice(pizzaPrice * counter + toppingsPrice);
+  };
+
+  // useEffect(() => {
+  //   calcToppingsPrice();
+  //   calcTotalPrice();
+  // }, [toppingList, counter, increase, decrease]); // increase, decrease
+
+  useEffect(() => {
+    calcTotalPrice();
+  }, [toppingsPrice, counter]);
+
+  useEffect(() => {
+    calcToppingsPrice();
+  }, [toppingList, counter]);
+
   return (
     <div>
       <div className="bg-red  ">
@@ -43,7 +93,15 @@ const Order = () => {
           nisi at pariatur accusamus eius, praesentium et laborum rem earum
           explicabo!
         </p>
-        <Form />
+        <Form
+          toppingList={toppingList}
+          counter={counter}
+          increase={increase}
+          decrease={decrease}
+          toppingsHandler={toppingsHandler}
+          toppingsPrice={toppingsPrice}
+          totalPrice={totalPrice}
+        />
       </div>
     </div>
   );
