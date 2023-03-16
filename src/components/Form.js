@@ -41,9 +41,9 @@ const Form = ({
   };
 
   const initialFormErrors = {
-    name: "Please Enter Your Name",
-    size: "Please Select Size",
-    thickness: "Please Select Thickness",
+    name: "",
+    size: "",
+    thickness: "",
   };
 
   const [orderForm, setOrderForm] = useState(initialFormState);
@@ -119,6 +119,7 @@ const Form = ({
               type="radio"
               value="Küçük"
               name="size"
+              data-cy="Küçük"
               onChange={handleChange}
             />
             <label htmlFor="Küçük" className=" ml-4">
@@ -150,7 +151,9 @@ const Form = ({
               Büyük
             </label>
           </div>
-          <p className="text-red text-s italic">{formErrors.size}</p>
+          <p data-cy="radio-error" className="text-red text-s italic">
+            {formErrors.size}
+          </p>
         </div>
         <div>
           <label
@@ -164,16 +167,21 @@ const Form = ({
             onChange={handleChange}
             // value={value}
             name="thickness"
+            data-cy="thickness"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-2/3 p-2.5"
           >
             <option selected disabled>
               Hamur Kalınlığı
             </option>
-            <option value="Standart">Standart</option>
+            <option value="Standart" data-cy="Standart">
+              Standart
+            </option>
             <option value="İnce">İnce</option>
             <option value="Kalın">Kalın</option>
           </select>
-          <p className="text-red text-s italic">{formErrors.thickness}</p>
+          <p data-cy="select-error" className="text-red text-s italic">
+            {formErrors.thickness}
+          </p>
         </div>
       </div>
 
@@ -203,6 +211,7 @@ const Form = ({
 
                   handleCheckChange(e);
                 }}
+                data-cy={item.name}
                 className=""
               />
               <label htmlFor={item.id} className="ml-2">
@@ -222,6 +231,7 @@ const Form = ({
           name="orderNote"
           onChange={handleChange}
           maxLength="150"
+          data-cy="orderNote"
           className="border-solid border-2 border-zinc-200 w-full p-4 rounded-md mb-4 text-gray-900 bg-gray-50 resize-none"
           placeholder="Siparişinize eklemek istediğin bir not var mı?"
         ></textarea>
@@ -238,11 +248,14 @@ const Form = ({
           name="name"
           onChange={handleChange}
           maxLength="20"
+          data-cy="name"
           className="border-solid border-2 border-zinc-200 w-full h-16 p-4 rounded-md mb-4 text-gray-900 bg-gray-50"
           placeholder="İsminizi giriniz"
           required
         ></input>
-        <p className="text-red text-s italic">{formErrors.name}</p>
+        <p data-cy="name-error" className="text-red text-s italic">
+          {formErrors.name}
+        </p>
       </div>
 
       <hr className="my-10 border-zinc-500" />
@@ -281,12 +294,13 @@ const Form = ({
             </div>
             <div className="flex justify-between font-Barlow font-bold text-red">
               <div>Toplam</div>
-              <div>{totalPrice.toFixed(2)} ₺</div>
+              <div data-cy="total-price">{totalPrice.toFixed(2)} ₺</div>
             </div>
           </div>
           {/* <Link to="/success/:id"> */}
           <button
             // type="submit" // Default type: submit
+            data-cy="submit"
             disabled={buttonDisabled}
             className="font-Barlow font-bold w-full py-4 px-8 border bg-yellow rounded-md hover:bg-[#fde047] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 disabled:bg-zinc-200"
           >
