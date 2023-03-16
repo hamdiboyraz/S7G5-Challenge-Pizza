@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { postOrder } from "../controllers/orderController";
 import orderSchema from "../models/orderModel";
+import * as Yup from "yup";
 
 const Form = ({
   toppingList,
@@ -40,9 +41,9 @@ const Form = ({
   };
 
   const initialFormErrors = {
-    name: "",
-    size: "",
-    thickness: "",
+    name: "Please Enter Your Name",
+    size: "Please Select Size",
+    thickness: "Please Select Thickness",
   };
 
   const [orderForm, setOrderForm] = useState(initialFormState);
@@ -51,6 +52,16 @@ const Form = ({
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    Yup.reach(orderSchema, name)
+      .validate(value)
+      .then((valid) => {
+        setFormErrors({ ...formErrors, [name]: "" });
+      })
+      .catch((err) => {
+        setFormErrors({ ...formErrors, [name]: err.errors[0] });
+      });
+
     setOrderForm({ ...orderForm, [name]: value });
   };
 
@@ -89,6 +100,10 @@ const Form = ({
       setButtonDisabled(!valid);
     });
   }, [orderForm]);
+
+  useEffect(() => {
+    console.log("FORM ERRORS", formErrors);
+  }, [formErrors]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -134,6 +149,7 @@ const Form = ({
               Büyük
             </label>
           </div>
+          <p className="text-red text-s italic">{formErrors.size}</p>
         </div>
         <div>
           <label
@@ -156,6 +172,7 @@ const Form = ({
             <option value="İnce">İnce</option>
             <option value="Kalın">Kalın</option>
           </select>
+          <p className="text-red text-s italic">{formErrors.thickness}</p>
         </div>
       </div>
 
@@ -224,6 +241,7 @@ const Form = ({
           placeholder="İsminizi giriniz"
           required
         ></input>
+        <p className="text-red text-s italic">{formErrors.name}</p>
       </div>
 
       <hr className="my-10 border-zinc-500" />
