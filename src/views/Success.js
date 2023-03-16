@@ -19,6 +19,7 @@ const Success = () => {
         <p className=" text-6xl text-white text-center font-Barlow mt-40">
           TEBRIKLER! <br /> PIZZA'NIZ YOLA ÇIKTI!
         </p>
+
         <div>{data.name && data.name}</div>
         <div>{data.amount && data.amount}</div>
         <div>{data.size && data.size}</div>

@@ -7,5 +7,8 @@ export const postOrder = (orderForm) => {
     sessionStorage.setItem("data", JSON.stringify(orderForm));
 
     console.log("Post Request", res.data);
+    console.log("hi", res.data.id);
+
+    return res.data.id;
   });
 };
