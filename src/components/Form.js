@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { postOrder } from "../controllers/orderController";
+import orderSchema from "../models/orderModel";
 
 const Form = ({
   toppingList,
@@ -38,25 +39,23 @@ const Form = ({
     amount: "1",
   };
 
+  const initialFormErrors = {
+    name: "",
+    size: "",
+    thickness: "",
+  };
+
   const [orderForm, setOrderForm] = useState(initialFormState);
+  const [formErrors, setFormErrors] = useState(initialFormErrors);
+  const [buttonDisabled, setButtonDisabled] = useState(true);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(e.target);
-
-    console.log(name);
-
-    console.log(value);
-
-    console.log(orderForm);
-
     setOrderForm({ ...orderForm, [name]: value });
   };
 
   const handleCheckChange = (e) => {
     const { name, checked } = e.target;
-    console.log(name);
-    console.log(checked);
     setOrderForm({
       ...orderForm,
       toppingsList: { ...orderForm.toppingsList, [name]: checked },
@@ -70,7 +69,12 @@ const Form = ({
     //   sessionStorage.setItem("is-authenticated", "true");
     //   console.log("Post Request", res.data);
     // });
+
     postOrder(orderForm);
+
+    // const id = postOrder(orderForm);
+    // console.log(id);
+
     navigate("/success/:id");
     console.log(e);
   };
@@ -78,6 +82,13 @@ const Form = ({
   useEffect(() => {
     setOrderForm({ ...orderForm, amount: counter });
   }, [counter]);
+
+  useEffect(() => {
+    orderSchema.isValid(orderForm).then((valid) => {
+      // console.log(valid);
+      setButtonDisabled(!valid);
+    });
+  }, [orderForm]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -257,7 +268,8 @@ const Form = ({
           {/* <Link to="/success/:id"> */}
           <button
             // type="submit" // Default type: submit
-            className="font-Barlow font-bold w-full py-4 px-8 border bg-yellow rounded-md hover:bg-[#fde047] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300"
+            disabled={buttonDisabled}
+            className="font-Barlow font-bold w-full py-4 px-8 border bg-yellow rounded-md hover:bg-[#fde047] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 disabled:bg-zinc-200"
           >
             SİPARİŞ VER
           </button>
