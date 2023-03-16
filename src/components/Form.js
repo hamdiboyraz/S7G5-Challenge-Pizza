@@ -73,7 +73,7 @@ const Form = ({
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // axios.post("https://reqres.in/api/orders", orderForm).then((res) => {
     //   localStorage.setItem("is-authenticated", "true");
@@ -81,13 +81,14 @@ const Form = ({
     //   console.log("Post Request", res.data);
     // });
 
-    postOrder(orderForm);
+    // without async/await
+    // postOrder(orderForm).then((res) => {
+    //   navigate(`/success/${res}`);
+    // });
 
-    // const id = postOrder(orderForm);
-    // console.log(id);
-
-    navigate("/success/:id");
-    console.log(e);
+    // with async await
+    const id = await postOrder(orderForm);
+    navigate(`/success/${id}`);
   };
 
   useEffect(() => {
