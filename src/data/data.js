@@ -1,3 +1,7 @@
+export const pizzas = [
+  { id: 1, name: "Margherita", price: 100, rating: 4.9, comments: 200 },
+];
+
 export const toppings = [
   { id: "1", name: "Pepperroni", price: 5, isChecked: false },
   { id: "2", name: "Domates", price: 5, isChecked: false },

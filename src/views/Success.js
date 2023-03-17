@@ -16,21 +16,23 @@ const Success = () => {
     <div className="bg-red w-screen h-screen">
       <div className="bg-red grid place-items-center ">
         <img src={headerImage} alt="teknolojik yemekler" className="py-16" />
-        <p className=" text-6xl text-white text-center font-Barlow mt-40">
+        <p className=" text-6xl text-white text-center font-Barlow mt-40 mb-16">
           TEBRIKLER! <br /> PIZZA'NIZ YOLA ÇIKTI!
         </p>
 
-        <div>{data.name && data.name}</div>
-        <div>{data.amount && data.amount}</div>
-        <div>{data.size && data.size}</div>
-        <div>{data.thickness && data.thickness}</div>
-        <div>
+        <div>Customer Name: {data.name && data.name}</div>
+        <div>Pizza Name: {data.pizzaName && data.pizzaName}</div>
+        <div>Amount: {data.amount && data.amount}</div>
+        <div>Size: {data.size && data.size}</div>
+        <div>Thickness: {data.thickness && data.thickness}</div>
+        <ul>
+          Toppings:
           {data.toppingsList &&
             Object.entries(data.toppingsList)
               .filter(([key, val]) => val === true)
-              .map((el) => <div>{el}</div>)}
-        </div>
-        <div>{data.orderNote && data.orderNote}</div>
+              .map((el) => <li className="list-disc">{el}</li>)}
+        </ul>
+        <div>Order Note: {data.orderNote && data.orderNote}</div>
       </div>
     </div>
   );

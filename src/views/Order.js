@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import headerImage from "../assets/logo.svg";
 import Form from "../components/Form";
-import { toppings } from "../data/data";
+import { pizzas, toppings } from "../data/data";
 
 const Order = () => {
   // console.log(toppings);
+  // console.log(pizzas[0]);
 
-  const pizzaPrice = 100;
+  const pizzaDetails = pizzas[0];
+
+  const pizzaPrice = pizzaDetails.price;
   const [counter, setCounter] = useState(1);
   const [pizzaSizePrice, setPizzaSizePrice] = useState(0);
   const [toppingsPrice, setToppingsPrice] = useState(0);
@@ -81,19 +84,32 @@ const Order = () => {
       </nav>
 
       <div className="w-1/2 mx-auto">
-        <h2 className=" text-3xl mb-4">Acı Pizza</h2>
+        <h2 className=" text-3xl mb-4">{pizzaDetails.name}</h2>
         <div className="grid grid-cols-4 gap-4 mb-4 items-center">
-          <p className=" text-4xl font-extrabold col-span-2">85.50 ₺</p>
-          <p className="grid-cols-{3} justify-self-end">4.9</p>
-          <p className=" grid-cols-{4} justify-self-end">(200)</p>
+          <p className=" text-4xl font-extrabold col-span-2">
+            {pizzaDetails.price} ₺
+          </p>
+          <p className="grid-cols-{3} justify-self-end">
+            {pizzaDetails.rating}
+          </p>
+          <p className=" grid-cols-{4} justify-self-end">
+            ({pizzaDetails.comments})
+          </p>
         </div>
         <p className=" mb-8">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit quos
-          temporibus autem officiis quas expedita obcaecati. Ea tenetur quae
-          nisi at pariatur accusamus eius, praesentium et laborum rem earum
-          explicabo!
+          <strong>
+            Pizza always makes a bad day feel better, and there’s nothing nicer
+            than a perfect slice of margherita pizza
+          </strong>{" "}
+          <br />
+          <br />
+          Pizza margherita, as the Italians call it, is a simple pizza hailing
+          from Naples. When done right, margherita pizza features a bubbly
+          crust, crushed San Marzano tomato sauce, fresh mozzarella and basil, a
+          drizzle of olive oil, and a sprinkle of salt. That is all.
         </p>
         <Form
+          pizzaDetails={pizzaDetails}
           toppingList={toppingList}
           counter={counter}
           increase={increase}

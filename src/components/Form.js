@@ -6,6 +6,7 @@ import orderSchema from "../models/orderModel";
 import * as Yup from "yup";
 
 const Form = ({
+  pizzaDetails,
   toppingList,
   counter,
   increase,
@@ -17,6 +18,7 @@ const Form = ({
   const navigate = useNavigate();
 
   const initialFormState = {
+    pizzaName: pizzaDetails.name,
     size: "",
     thickness: "",
     toppingsList: {
